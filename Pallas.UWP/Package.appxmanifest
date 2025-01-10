@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+
+  <Identity
+    Name="28E3E05A-2E78-42A9-A98B-0EC755ACAD16"
+    Publisher="O=MyCompany"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="58BB876F-92D1-444F-8560-474680480718" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>Pallas</DisplayName>
+    <PublisherDisplayName>Pallas</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="Pallas.App">
+      <uap:VisualElements
+        DisplayName="Pallas"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="Pallas"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Type="include" Match="https://s.tradingview.com/embed-widget/news/?locale=en" WindowsRuntimeAccess="none"/>
+        <uap:Rule Type="include" Match="https://s.tradingview.com/embed-widget/timeline/?feedMode=all_symbols&amp;colorTheme=dark&amp;displayMode=adaptive&amp;locale=en" WindowsRuntimeAccess="none"/>
+        <uap:Rule Type="include" Match="https://s.tradingview.com/embed-widget/events/?colorTheme=dark&amp;isTransparent=false&amp;locale=en&amp;importanceFilter=-1,0,1&amp;countryFilter=ar,au,br,ca,cn,fr,de,in,id,it,jp,kr,mx,ru,sa,za,tr,gb,us,eu" WindowsRuntimeAccess="none"/>
+        <uap:Rule Type="include" Match="https://s.tradingview.com/embed-widget/timeline/?feedMode=all_symbols&amp;amp;colorTheme=dark&amp;amp;displayMode=adaptive&amp;amp;locale=en" WindowsRuntimeAccess="none"/>
+      </uap:ApplicationContentUriRules>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <Capability Name="internetClientServer"/>
+    <Capability Name="privateNetworkClientServer"/>
+  </Capabilities>
+</Package>

@@ -1,0 +1,8 @@
+﻿things to fix
+
+
+2) Size of the upper bar that do not take the whole window in pages with objects
+3) Time is blinking when i switch of Page
+4) Macro News Calendar in NewsPage
+4) add Market, Orderbook in the navigation menu
+5) App Crash from navigation menu buttons

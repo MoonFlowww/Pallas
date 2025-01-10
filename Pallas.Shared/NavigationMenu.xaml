@@ -1,0 +1,92 @@
+﻿<UserControl
+    x:Class="Pallas.NavigationMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Pallas"
+    VerticalAlignment="Stretch"
+    HorizontalAlignment="Left">
+
+    <UserControl.Resources>
+        <!-- Button Style for Navigation -->
+        <Style x:Key="NavigationButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,0,5,0">
+                                <!-- Icon of the button (Augmentation de la taille des icônes) -->
+                                <FontIcon x:Name="IconPresenter" Glyph="{TemplateBinding Tag}" FontSize="25" Width="35" Height="35" Margin="5,0,5,0" Foreground="{TemplateBinding Foreground}" />
+                                <!-- ContentPresenter to display the button text (Augmentation de la marge à droite) -->
+                                <ContentPresenter x:Name="TextPresenter" VerticalAlignment="Center" Margin="0,0,0,0" Foreground="{TemplateBinding Foreground}" />
+                            </StackPanel>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <!-- Change Background on Hover -->
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="#444444"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <!-- Change Icon Color on Hover -->
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <!-- Change Text Color on Hover -->
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="TextPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <!-- Root Grid that stretches vertically -->
+    <Grid x:Name="RootGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#3e3934" Width="{Binding ElementName=ExpandButton, Path=IsChecked, Converter={StaticResource WidthConverter}}">
+        <StackPanel x:Name="NavigationStackPanel" Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,0">
+            <!-- Home Button -->
+            <Button x:Name="HomeButton" Tag="&#xE80F;" HorizontalAlignment="Stretch" Margin="2" Style="{StaticResource NavigationButtonStyle}" Click="HomeButton_Click" Foreground="AntiqueWhite">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="HomeText" Text="Home" FontSize="17" VerticalAlignment="Center" Margin="0,0,0,0" Visibility="Collapsed" Foreground="AntiqueWhite"/>
+                </StackPanel>
+            </Button>
+
+            <!-- News Page Button -->
+            <Button x:Name="NewsButton" Tag="&#xE12A;" HorizontalAlignment="Stretch" Margin="2" Click="NewsButton_Click" Style="{StaticResource NavigationButtonStyle}" Foreground="AntiqueWhite">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="NewsText" Text="News" FontSize="17" VerticalAlignment="Center" Margin="0,0,0,0" Visibility="Collapsed" Foreground="AntiqueWhite"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Risk Page Button -->
+            <Button x:Name="RiskButton" Tag="&#xEDA3;" HorizontalAlignment="Stretch" Margin="2" Style="{StaticResource NavigationButtonStyle}" Click="RiskButton_Click" Foreground="AntiqueWhite">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="RiskText" Text="Risk" FontSize="17" VerticalAlignment="Center" Margin="0,0,0,0" Visibility="Collapsed" Foreground="AntiqueWhite"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Orderbook Page Button -->
+            <Button x:Name="OrderbookButton" Tag="&#xE82D;" HorizontalAlignment="Stretch" Margin="2" Click="OrderbookButton_Click" Style="{StaticResource NavigationButtonStyle}" Foreground="AntiqueWhite">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="OrderbookText" Text="Orderbook" FontSize="17" VerticalAlignment="Center" Margin="0,0,0,0" Visibility="Collapsed" Foreground="AntiqueWhite"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Settings Page Button -->
+            <Button x:Name="SettingsButton" Tag="&#xE713;" HorizontalAlignment="Left" Margin="2" Click="SettingsButton_Click" Style="{StaticResource NavigationButtonStyle}" Foreground="AntiqueWhite">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="SettingsText" Text="Settings" FontSize="17" VerticalAlignment="Center" Margin="0,0,0,0" Visibility="Collapsed" Foreground="AntiqueWhite"/>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Pallas.Shared", "Pallas.Shared\Pallas.Shared.shproj", "{6279C845-92F8-4333-AB99-3D213163593C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pallas.Uwp", "Pallas.UWP\Pallas.Uwp.csproj", "{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|Any CPU.Build.0 = Debug|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|ARM.ActiveCfg = Debug|ARM
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|ARM.Build.0 = Debug|ARM
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|ARM.Deploy.0 = Debug|ARM
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|ARM64.Build.0 = Debug|ARM64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|x64.ActiveCfg = Debug|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|x64.Build.0 = Debug|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|x64.Deploy.0 = Debug|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|x86.ActiveCfg = Debug|x86
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|x86.Build.0 = Debug|x86
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Debug|x86.Deploy.0 = Debug|x86
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|Any CPU.ActiveCfg = Release|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|Any CPU.Build.0 = Release|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|Any CPU.Deploy.0 = Release|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|ARM.ActiveCfg = Release|ARM
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|ARM.Build.0 = Release|ARM
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|ARM.Deploy.0 = Release|ARM
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|ARM64.ActiveCfg = Release|ARM64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|ARM64.Build.0 = Release|ARM64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|ARM64.Deploy.0 = Release|ARM64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|x64.ActiveCfg = Release|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|x64.Build.0 = Release|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|x64.Deploy.0 = Release|x64
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|x86.ActiveCfg = Release|x86
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|x86.Build.0 = Release|x86
+		{28E3E05A-2E78-42A9-A98B-0EC755ACAD16}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7108B5DE-8367-4210-B69F-4779AF6CB49A}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Pallas.Shared\Pallas.Shared.projitems*{28e3e05a-2e78-42a9-a98b-0ec755acad16}*SharedItemsImports = 4
+		Pallas.Shared\Pallas.Shared.projitems*{6279c845-92f8-4333-ab99-3d213163593c}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal
