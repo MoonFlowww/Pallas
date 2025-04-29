@@ -1,0 +1,25 @@
+{
+  "news": [
+    {
+      "id": "1",
+      "category": "forex",
+      "title": "EUR/USD Surges After ECB Comments on Rate Path",
+      "summary": "The euro strengthened against the dollar following hawkish comments from ECB officials regarding the future path of interest rates.",
+      "source": "Financial Times",
+      "timestamp": "2024-02-07T14:30:00Z",
+      "impact": "high",
+      "sentiment": "positive"
+    },
+    {
+      "id": "2",
+      "category": "economy",
+      "title": "US Job Market Shows Resilience in Latest Report",
+      "summary": "Non-farm payrolls exceeded expectations, pointing to continued strength in the US labor market despite monetary tightening.",
+      "source": "Bloomberg",
+      "timestamp": "2024-02-07T13:15:00Z",
+      "impact": "high",
+      "sentiment": "positive"
+    }
+  ]
+}
+

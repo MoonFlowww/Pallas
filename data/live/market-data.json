@@ -1,0 +1,37 @@
+{
+  "assets": [
+    {
+      "name": "EUR/USD",
+      "priceChange": 0.75,
+      "volumeChange": 0.45,
+      "color": "bg-blue-500"
+    },
+    {
+      "name": "DXY",
+      "priceChange": -0.25,
+      "volumeChange": 0.3,
+      "color": "bg-green-500"
+    },
+    {
+      "name": "VIX",
+      "priceChange": 0.15,
+      "volumeChange": -0.6,
+      "color": "bg-yellow-500"
+    },
+    {
+      "name": "GOLD",
+      "priceChange": 0.5,
+      "volumeChange": 0.8,
+      "color": "bg-purple-500"
+    }
+  ],
+  "marketStats": {
+    "correlation": 0.85,
+    "volatility": 0.45
+  },
+  "volumeStats": {
+    "strength": 0.92,
+    "ratio": 0.67
+  }
+}
+

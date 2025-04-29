@@ -1,0 +1,50 @@
+{
+  "positions": [
+    {
+      "id": "pos1",
+      "entry": 1.075,
+      "takeProfit": 1.085,
+      "stopLoss": 1.065,
+      "exitPrice": null,
+      "isLong": true,
+      "type": "real",
+      "status": "open",
+      "breakEven": false,
+      "asset": "EUR/USD",
+      "date": "2024-02-09T17:30:00Z",
+      "entryTime": "2024-02-09T17:30:00Z",
+      "currentPrice": 1.078
+    },
+    {
+      "id": "pos2",
+      "entry": 17500,
+      "takeProfit": 17800,
+      "stopLoss": 17200,
+      "exitPrice": 17600,
+      "isLong": false,
+      "type": "demo",
+      "status": "open",
+      "breakEven": true,
+      "asset": "NAS100",
+      "date": "2024-02-09T17:45:00Z",
+      "entryTime": "2024-02-09T17:45:00Z",
+      "currentPrice": 17550
+    },
+    {
+      "id": "pos3",
+      "entry": 2.35,
+      "takeProfit": 2.5,
+      "stopLoss": 2.2,
+      "exitPrice": null,
+      "isLong": true,
+      "type": "backtest",
+      "status": "open",
+      "breakEven": false,
+      "asset": "NGAS",
+      "date": "2024-02-09T17:55:00Z",
+      "entryTime": "2024-02-09T17:55:00Z",
+      "currentPrice": 2.38
+    }
+  ]
+}
+

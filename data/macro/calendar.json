@@ -1,0 +1,27 @@
+{
+  "events": [
+    {
+      "id": "1",
+      "title": "Non-Farm Payrolls",
+      "country": "USD",
+      "date": "2024-02-07",
+      "time": "13:30",
+      "actual": "353K",
+      "forecast": "180K",
+      "previous": "216K",
+      "impact": "high"
+    },
+    {
+      "id": "2",
+      "title": "Interest Rate Decision",
+      "country": "EUR",
+      "date": "2024-02-07",
+      "time": "14:45",
+      "actual": "4.50%",
+      "forecast": "4.50%",
+      "previous": "4.50%",
+      "impact": "high"
+    }
+  ]
+}
+

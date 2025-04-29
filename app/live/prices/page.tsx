@@ -1,0 +1,61 @@
+import { AppSidebar } from "@/components/app-sidebar"
+import { TradingSessions } from "@/components/trading-sessions"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+
+export default function LivePricesPage() {
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center justify-between border-b px-6">
+          <SidebarTrigger className="-ml-2" />
+          <div className="pr-4">
+            <TradingSessions />
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-6 p-6">
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card>
+              <CardHeader>
+                <CardTitle>EUR/USD</CardTitle>
+                <CardDescription>Live price feed</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="aspect-[4/3] rounded-lg bg-muted" />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>GBP/USD</CardTitle>
+                <CardDescription>Live price feed</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="aspect-[4/3] rounded-lg bg-muted" />
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>USD/JPY</CardTitle>
+                <CardDescription>Live price feed</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="aspect-[4/3] rounded-lg bg-muted" />
+              </CardContent>
+            </Card>
+          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Price Overview</CardTitle>
+              <CardDescription>Multi-asset price comparison</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[400px] rounded-lg bg-muted" />
+            </CardContent>
+          </Card>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+
