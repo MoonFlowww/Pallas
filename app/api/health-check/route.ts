@@ -1,8 +1,13 @@
 import { Pool } from "pg"
 import { NextResponse } from "next/server"
 
+const connectionString =
+  process.env.TRADES_DB_URL ||
+  process.env.POSTGRES_URL ||
+  `postgresql://${process.env.POSTGRES_USER || 'trader'}:${process.env.POSTGRES_PASSWORD || 'xyz'}@${process.env.POSTGRES_HOST || 'localhost'}:${process.env.POSTGRES_PORT || '5432'}/${process.env.POSTGRES_DB || 'trades'}`
+
 const pool = new Pool({
-  connectionString: "postgresql://postgres:Monarch@host.docker.internal:5432/PallasDB",
+  connectionString,
 })
 
 export async function GET() {

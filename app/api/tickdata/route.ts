@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { sql } from "@/lib/db"
+import { marketSql } from "@/lib/db"
 
 export async function GET(request: Request) {
   try {
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
     
     // First check if the table exists and has data
     try {
-      const checkResult = await sql`
+      const checkResult = await marketSql`
         SELECT COUNT(*) as count 
         FROM information_schema.tables 
         WHERE table_name = 'EURUSD_tickdata'
@@ -65,7 +65,7 @@ export async function GET(request: Request) {
       }
       
       // Check if table has data
-      const countResult = await sql`SELECT COUNT(*) as count FROM "EURUSD_tickdata" LIMIT 1`;
+      const countResult = await marketSql`SELECT COUNT(*) as count FROM "EURUSD_tickdata" LIMIT 1`;
       if (countResult.rows[0].count === '0') {
         console.log("API: Table EURUSD_tickdata exists but has no data");
         // Return mock data for development 
@@ -80,7 +80,7 @@ export async function GET(request: Request) {
       // Continue with the query anyway in case the error is with our check
     }
     
-    const result = await sql`
+    const result = await marketSql`
       WITH intervals AS (
         SELECT 
           CASE

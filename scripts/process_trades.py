@@ -10,18 +10,22 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 # Database connection parameters
+TRADES_DB_URL = os.getenv('TRADES_DB_URL')
 DB_PARAMS = {
-    'dbname': 'PallasDB',
-    'user': 'postgres',
-    'password': 'Monarch',
-    'host': 'localhost',
-    'port': '5432'
+    'dbname': os.getenv('POSTGRES_DB', 'trades'),
+    'user': os.getenv('POSTGRES_USER', 'trader'),
+    'password': os.getenv('POSTGRES_PASSWORD', 'xyz'),
+    'host': os.getenv('POSTGRES_HOST', 'localhost'),
+    'port': os.getenv('POSTGRES_PORT', '5432')
 }
 
 def connect_to_db():
     """Connect to PostgreSQL database"""
     try:
-        conn = psycopg2.connect(**DB_PARAMS)
+        if TRADES_DB_URL:
+            conn = psycopg2.connect(TRADES_DB_URL)
+        else:
+            conn = psycopg2.connect(**DB_PARAMS)
         print("Database connection established successfully")
         return conn
     except Exception as e:
