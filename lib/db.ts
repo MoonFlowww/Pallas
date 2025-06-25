@@ -1,23 +1,39 @@
 import { Pool } from 'pg';
 import { z } from 'zod';
 
-// Create PostgreSQL connection pool with better error handling and connection config
+// Build connection strings for trades and market databases
+const tradeConnectionString =
+  process.env.TRADES_DB_URL ||
+  process.env.POSTGRES_URL ||
+  `postgresql://${process.env.POSTGRES_USER || 'trader'}:${process.env.POSTGRES_PASSWORD || 'xyz'}@${process.env.POSTGRES_HOST || 'localhost'}:${process.env.POSTGRES_PORT || '5432'}/${process.env.POSTGRES_DB || 'trades'}`;
+
+const marketConnectionString =
+  process.env.MARKET_DB_URL ||
+  'postgresql://marketmaker:xyz@localhost:5432/market';
+
+// Create PostgreSQL connection pools with better error handling
 const pool = new Pool({
-  user: 'postgres',
-  password: 'Monarch',
-  host: process.env.NODE_ENV === 'production' ? 'host.docker.internal' : 'localhost',
-  port: 5432,
-  database: 'PallasDB',
-  // Add connection timeout and error handling
+  connectionString: tradeConnectionString,
   connectionTimeoutMillis: 5000,
   query_timeout: 10000,
-  // Add SSL mode
-  ssl: false
+  ssl: false,
+});
+
+const marketPool = new Pool({
+  connectionString: marketConnectionString,
+  connectionTimeoutMillis: 5000,
+  query_timeout: 10000,
+  ssl: false,
 });
 
 // Add error handler for the pool
 pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
+  process.exit(-1);
+});
+
+marketPool.on('error', (err) => {
+  console.error('Unexpected error on idle market client', err);
   process.exit(-1);
 });
 
@@ -48,8 +64,34 @@ const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
   }
 };
 
+// SQL executor for the market database
+const marketSql = async (strings: TemplateStringsArray, ...values: any[]) => {
+  const text = strings.reduce((prev, curr, i) => prev + '$' + i + curr);
+  const query = {
+    text: text.replace(/\$0/, ''),
+    values: values,
+  };
+
+  try {
+    const client = await marketPool.connect();
+    try {
+      const result = await client.query(query);
+      return result;
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    console.error('Market database query error:', {
+      error,
+      query: query.text,
+      values: query.values,
+    });
+    throw error;
+  }
+};
+
 // Export pool and sql for external use
-export { pool, sql };
+export { pool, sql, marketPool, marketSql };
 
 // Update trade schema to match actual database structure
 export const tradeSchema = z.object({
@@ -551,15 +593,15 @@ export async function getEURUSDTickData(limit: number = 100) {
     
     // Test database connection first
     try {
-      await sql`SELECT 1`;
+      await marketSql`SELECT 1`;
       console.log("DB: Database connection test successful");
     } catch (connError) {
       console.error("DB: Database connection test failed:", connError);
       throw new Error("Database connection failed");
     }
 
-    const result = await sql`
-      SELECT 
+    const result = await marketSql`
+      SELECT
         timestamp,
         ask
       FROM "EURUSD_tickdata"

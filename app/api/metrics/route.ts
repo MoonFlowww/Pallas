@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { sql } from "@/lib/db"
+import { sql, marketSql } from "@/lib/db"
 import { QueryResult } from "pg"
 
 export async function GET(request: Request) {
@@ -543,7 +543,7 @@ export async function GET(request: Request) {
     const calculateAlphaBeta = async (startDate: Date, endDate: Date): Promise<{ alpha: number; beta: number; correlation: number }> => {
       try {
         // Find min/max dates in the database to avoid querying too much data
-        const dateRangeResult = await sql`
+        const dateRangeResult = await marketSql`
           SELECT 
             MIN(date) as min_date,
             MAX(date) as max_date
@@ -566,7 +566,7 @@ export async function GET(request: Request) {
         console.log(`Using EURUSD data range: ${queryStartDate.toISOString()} - ${queryEndDate.toISOString()}`);
         
         // Get EURUSD tick data for the scaled period
-        const tickData = await sql`
+        const tickData = await marketSql`
           SELECT 
             date,
             (ask + bid) / 2 as price
