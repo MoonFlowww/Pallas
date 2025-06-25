@@ -24,4 +24,4 @@ if [ $? -eq 0 ]; then
   echo "Equity curve saved to public/equity_curve.png"
 else
   echo "Analysis failed. Check the logs for details."
-fi 
+fi
