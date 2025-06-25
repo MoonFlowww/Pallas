@@ -16,4 +16,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY process_trades.py .
 
 # Set the entrypoint
-ENTRYPOINT ["python", "process_trades.py"] 
+ENTRYPOINT ["python", "process_trades.py"]
