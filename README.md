@@ -37,3 +37,16 @@ bash scripts/run_analysis.sh
 ```
 
 The Windows PowerShell script has been removed; use the shell script on Linux.
+
+## Troubleshooting Database Connection Errors
+
+If the web service logs show `ECONNREFUSED` when connecting to PostgreSQL,
+check the following:
+
+1. Ensure your PostgreSQL server listens on an address accessible from the
+   Docker container. In `postgresql.conf` set
+   `listen_addresses = '*'` (or include your host's IP) and restart the service.
+2. On Linux, Docker does not automatically provide the `host.docker.internal`
+   hostname. The `docker-compose.yml` file maps this name to the host using
+   `extra_hosts`. Rebuild the container after updating Compose if needed.
+
