@@ -5,6 +5,11 @@ import { ReactNode } from 'react'
 
 export const metadata = {
   generator: 'v0.dev'
+  generator: 'v0.dev',
+  title: 'Pallas',
+  icons: {
+    icon: '/PallasInc.ico',
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
