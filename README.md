@@ -11,6 +11,8 @@ Database credentials are loaded from environment variables. The main variables a
 - `POSTGRES_URL`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`, `POSTGRES_PORT`, and `POSTGRES_DB` can also be used as fallbacks
 
 Copy `env.example` to `.env` and update the values for your setup.
+If your PostgreSQL server only listens on IPv4, use `127.0.0.1` instead of `localhost`
+in the connection URLs to avoid IPv6 connection errors such as `ECONNREFUSED ::1:5432`.
 
 ## Running with Docker Compose
 
