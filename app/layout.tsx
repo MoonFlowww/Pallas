@@ -4,8 +4,6 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { ReactNode } from 'react'
 
 export const metadata = {
-  generator: 'v0.dev'
-  generator: 'v0.dev',
   title: 'Pallas',
   icons: {
     icon: '/PallasInc.ico',
