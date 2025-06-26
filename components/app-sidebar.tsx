@@ -47,37 +47,41 @@ const assetTypeIcons = {
 
 type AssetType = keyof typeof assetTypeIcons
 
-const assets = [
-  {
-    name: "EUR/USD",
-    type: "Forex" as AssetType,
-  },
-  {
-    name: "NAS100",
-    type: "Index" as AssetType,
-  },
-  {
-    name: "NGAS",
-    type: "Commodity" as AssetType,
-  },
-  {
-    name: "BTC/USD",
-    type: "Crypto" as AssetType,
-  },
-  {
-    name: "AAPL",
-    type: "Stock" as AssetType,
-  },
-]
+
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [selectedAsset, setSelectedAsset] = React.useState(assets[0])
+  const [assets, setAssets] = React.useState<{ name: string; type: AssetType; table: string }[]>([])
+  const [selectedAsset, setSelectedAsset] = React.useState<{ name: string; type: AssetType; table: string } | null>(null)
   const [searchQuery, setSearchQuery] = React.useState("")
-  const [customAssets, setCustomAssets] = React.useState<typeof assets>([])
   const [settingsOpen, setSettingsOpen] = React.useState(false)
 
-  const allAssets = [...assets, ...customAssets]
-  const filteredAssets = allAssets.filter((asset) => asset.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  const loadMarkets = React.useCallback(async () => {
+    try {
+      const res = await fetch('/api/markets')
+      const data = await res.json()
+      const saved = JSON.parse(localStorage.getItem('marketNicknames') || '{}')
+      const markets = (data.tables || []).map((t: string) => {
+        const cfg = saved[t] || {}
+        return { name: cfg.nickname || t, type: (cfg.type || 'Forex') as AssetType, table: t }
+      })
+      setAssets(markets)
+      if (markets.length > 0) {
+        setSelectedAsset((prev) => prev || markets[0])
+      }
+    } catch (err) {
+      console.error('Failed to load markets', err)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    loadMarkets()
+    const handler = () => loadMarkets()
+    window.addEventListener('markets-updated', handler)
+    return () => window.removeEventListener('markets-updated', handler)
+  }, [loadMarkets])
+
+  const filteredAssets = assets.filter((asset) => asset.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  const currentAsset = selectedAsset || assets[0]
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -88,11 +92,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton size="lg" className="group-data-[collapsed=true]:justify-center">
                   <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                    {React.createElement(assetTypeIcons[selectedAsset.type], { className: "size-4" })}
+                    {currentAsset && React.createElement(assetTypeIcons[currentAsset.type], { className: "size-4" })}
                   </div>
                   <div className="flex flex-col gap-0.5 leading-none group-data-[collapsed=true]:hidden">
-                    <span className="font-semibold">{selectedAsset.name}</span>
-                    <span className="text-xs">{selectedAsset.type}</span>
+                    <span className="font-semibold">{currentAsset?.name}</span>
+                    <span className="text-xs">{currentAsset?.type}</span>
                   </div>
                   <ChevronDown className="ml-auto size-4 group-data-[collapsed=true]:hidden" />
                 </SidebarMenuButton>
@@ -103,24 +107,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <Search className="size-4 text-muted-foreground" />
                     <Input
                       type="search"
-                      placeholder="Search or add asset..."
+                      placeholder="Search market..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (
-                          e.key === "Enter" &&
-                          searchQuery &&
-                          !filteredAssets.some((a) => a.name.toLowerCase() === searchQuery.toLowerCase())
-                        ) {
-                          const newAsset = {
-                            name: searchQuery,
-                            type: "Custom" as AssetType,
-                          }
-                          setCustomAssets((prev) => [...prev, newAsset])
-                          setSelectedAsset(newAsset)
-                          setSearchQuery("")
-                        }
-                      }}
                       className="h-8 border-0 p-0 focus-visible:ring-0"
                       autoComplete="off"
                       onClick={(e) => e.stopPropagation()}
@@ -140,7 +129,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       <span>{asset.name}</span>
                       <span className="text-xs text-muted-foreground">{asset.type}</span>
                     </div>
-                    {selectedAsset.name === asset.name && <Check className="ml-auto size-4" />}
+                    {currentAsset && currentAsset.name === asset.name && <Check className="ml-auto size-4" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
