@@ -93,8 +93,23 @@ const marketSql = async (strings: TemplateStringsArray, ...values: any[]) => {
   }
 };
 
+export async function getMarketTables(): Promise<string[]> {
+  try {
+    const result = await marketSql`
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'public'
+        AND table_type = 'BASE TABLE'
+    `;
+    return result.rows.map((r) => r.table_name as string);
+  } catch (error) {
+    console.error('Failed to fetch market tables:', error);
+    return [];
+  }
+}
+
 // Export pool and sql for external use
-export { pool, sql, marketPool, marketSql };
+export { pool, sql, marketPool, marketSql, getMarketTables };
 
 // Update trade schema to match actual database structure
 export const tradeSchema = z.object({

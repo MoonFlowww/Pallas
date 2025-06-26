@@ -1,12 +1,90 @@
 "use client"
 
+import * as React from "react"
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
-import { Settings, HardDrive, PenToolIcon as Tool, Terminal } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Settings, HardDrive, PenToolIcon as Tool, Terminal, LineChart } from "lucide-react"
+
+type MarketConfig = { table: string; nickname: string; type: string }
+
+function MarketSettings() {
+  const [markets, setMarkets] = React.useState<MarketConfig[]>([])
+
+  React.useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch('/api/markets')
+        const data = await res.json()
+        const saved = JSON.parse(localStorage.getItem('marketNicknames') || '{}')
+        const configs = (data.tables || []).map((t: string) => ({
+          table: t,
+          nickname: saved[t]?.nickname || t,
+          type: saved[t]?.type || 'Forex',
+        }))
+        setMarkets(configs)
+      } catch (err) {
+        console.error('Failed to load markets', err)
+      }
+    }
+    load()
+  }, [])
+
+  const updateNickname = (i: number, value: string) => {
+    setMarkets((prev) => prev.map((m, idx) => (idx === i ? { ...m, nickname: value } : m)))
+  }
+
+  const updateType = (i: number, value: string) => {
+    setMarkets((prev) => prev.map((m, idx) => (idx === i ? { ...m, type: value } : m)))
+  }
+
+  const save = () => {
+    const store: Record<string, { nickname: string; type: string }> = {}
+    markets.forEach((m) => {
+      store[m.table] = { nickname: m.nickname, type: m.type }
+    })
+    localStorage.setItem('marketNicknames', JSON.stringify(store))
+    window.dispatchEvent(new Event('markets-updated'))
+  }
+
+  if (markets.length === 0) {
+    return <p className="text-sm text-muted-foreground">No markets found</p>
+  }
+
+  return (
+    <div className="space-y-4 py-2">
+      {markets.map((m, i) => (
+        <div key={m.table} className="flex items-center gap-2">
+          <Label className="w-1/3">{m.table}</Label>
+          <Input
+            value={m.nickname}
+            onChange={(e) => updateNickname(i, e.target.value)}
+            className="flex-1"
+          />
+          <Select value={m.type} onValueChange={(val) => updateType(i, val)}>
+            <SelectTrigger className="w-32">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {['Forex', 'Index', 'Commodity', 'Crypto', 'Stock'].map((t) => (
+                <SelectItem key={t} value={t}>
+                  {t}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      ))}
+      <Button onClick={save} className="w-full">
+        Save
+      </Button>
+    </div>
+  )
+}
 
 export function SettingsDialog() {
   return (
@@ -15,7 +93,7 @@ export function SettingsDialog() {
         <DialogTitle>Settings</DialogTitle>
       </DialogHeader>
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="general" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
             General
@@ -23,6 +101,10 @@ export function SettingsDialog() {
           <TabsTrigger value="storage" className="flex items-center gap-2">
             <HardDrive className="h-4 w-4" />
             Storage
+          </TabsTrigger>
+          <TabsTrigger value="markets" className="flex items-center gap-2">
+            <LineChart className="h-4 w-4" />
+            Markets
           </TabsTrigger>
           <TabsTrigger value="advanced" className="flex items-center gap-2">
             <Tool className="h-4 w-4" />
@@ -61,6 +143,9 @@ export function SettingsDialog() {
               Manage Storage
             </Button>
           </div>
+        </TabsContent>
+        <TabsContent value="markets" className="space-y-4">
+          <MarketSettings />
         </TabsContent>
         <TabsContent value="advanced" className="space-y-4">
           <div className="space-y-4 py-2">
