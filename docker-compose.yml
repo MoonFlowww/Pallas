@@ -8,8 +8,9 @@ services:
     environment:
       - NODE_ENV=production
       # PostgreSQL connection strings
-      - TRADES_DB_URL=postgresql://trader:xyz@127.0.0.1:5432/trades
-      - MARKET_DB_URL=postgresql://marketmaker:xyz@127.0.0.1:5432/market
+      - TRADES_DB_URL=postgresql://trader:xyz@host.docker.internal:5432/trades
+      
+      - MARKET_DB_URL=postgresql://marketmaker:xyz@host.docker.internal:5432/market
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
       interval: 30s
