@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Settings, HardDrive, PenToolIcon as Tool, Terminal, LineChart } from "lucide-react"
+import { Settings, HardDrive, PenToolIcon as Tool, Terminal } from "lucide-react"
 
 type MarketConfig = { table: string; nickname: string; type: string }
 
@@ -57,28 +57,34 @@ function MarketSettings() {
 
   return (
     <div className="space-y-4 py-2">
-      {markets.map((m, i) => (
-        <div key={m.table} className="flex items-center gap-2">
-          <Label className="w-1/3">{m.table}</Label>
-          <Input
-            value={m.nickname}
-            onChange={(e) => updateNickname(i, e.target.value)}
-            className="flex-1"
-          />
-          <Select value={m.type} onValueChange={(val) => updateType(i, val)}>
-            <SelectTrigger className="w-32">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {['Forex', 'Index', 'Commodity', 'Crypto', 'Stock'].map((t) => (
-                <SelectItem key={t} value={t}>
-                  {t}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      ))}
+      <div className="grid grid-cols-3 gap-2 text-sm font-semibold">
+        <div>Table</div>
+        <div>Nickname</div>
+        <div>Type</div>
+      </div>
+      <div className="space-y-2">
+        {markets.map((m, i) => (
+          <div key={m.table} className="grid grid-cols-3 gap-2 items-center">
+            <span className="truncate text-sm font-medium">{m.table}</span>
+            <Input
+              value={m.nickname}
+              onChange={(e) => updateNickname(i, e.target.value)}
+            />
+            <Select value={m.type} onValueChange={(val) => updateType(i, val)}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {['Forex', 'Index', 'Commodity', 'Crypto', 'Stock'].map((t) => (
+                  <SelectItem key={t} value={t}>
+                    {t}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        ))}
+      </div>
       <Button onClick={save} className="w-full">
         Save
       </Button>
@@ -93,7 +99,7 @@ export function SettingsDialog() {
         <DialogTitle>Settings</DialogTitle>
       </DialogHeader>
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="general" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
             General
@@ -101,10 +107,6 @@ export function SettingsDialog() {
           <TabsTrigger value="storage" className="flex items-center gap-2">
             <HardDrive className="h-4 w-4" />
             Storage
-          </TabsTrigger>
-          <TabsTrigger value="markets" className="flex items-center gap-2">
-            <LineChart className="h-4 w-4" />
-            Markets
           </TabsTrigger>
           <TabsTrigger value="advanced" className="flex items-center gap-2">
             <Tool className="h-4 w-4" />
@@ -143,8 +145,6 @@ export function SettingsDialog() {
               Manage Storage
             </Button>
           </div>
-        </TabsContent>
-        <TabsContent value="markets" className="space-y-4">
           <MarketSettings />
         </TabsContent>
         <TabsContent value="advanced" className="space-y-4">
