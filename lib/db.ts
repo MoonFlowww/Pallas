@@ -93,7 +93,7 @@ const marketSql = async (strings: TemplateStringsArray, ...values: any[]) => {
   }
 };
 
-export async function getMarketTables(): Promise<string[]> {
+async function getMarketTables(): Promise<string[]> {
   try {
     const result = await marketSql`
       SELECT table_name
@@ -108,7 +108,7 @@ export async function getMarketTables(): Promise<string[]> {
   }
 }
 
-// Export pool and sql for external use
+// Export pool and SQL helpers for external use
 export { pool, sql, marketPool, marketSql, getMarketTables };
 
 // Update trade schema to match actual database structure
