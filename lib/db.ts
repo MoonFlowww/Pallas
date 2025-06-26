@@ -2,14 +2,17 @@ import { Pool } from 'pg';
 import { z } from 'zod';
 
 // Build connection strings for trades and market databases
-const tradeConnectionString =
-  process.env.TRADES_DB_URL ||
-  process.env.POSTGRES_URL ||
-  `postgresql://${process.env.POSTGRES_USER || 'trader'}:${process.env.POSTGRES_PASSWORD || 'xyz'}@${process.env.POSTGRES_HOST || 'localhost'}:${process.env.POSTGRES_PORT || '5432'}/${process.env.POSTGRES_DB || 'trades'}`;
+const tradeConnectionString = process.env.TRADES_DB_URL || process.env.POSTGRES_URL;
 
-const marketConnectionString =
-  process.env.MARKET_DB_URL ||
-  'postgresql://marketmaker:xyz@localhost:5432/market';
+if (!tradeConnectionString) {
+  throw new Error('TRADES_DB_URL is not configured');
+}
+
+const marketConnectionString = process.env.MARKET_DB_URL;
+
+if (!marketConnectionString) {
+  throw new Error('MARKET_DB_URL is not configured');
+}
 
 // Create PostgreSQL connection pools with better error handling
 const pool = new Pool({
