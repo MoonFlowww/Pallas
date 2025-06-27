@@ -42,10 +42,16 @@ marketPool.on('error', (err) => {
 
 // SQL query executor
 const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
-  const text = strings.reduce((prev, curr, i) => prev + '$' + i + curr);
+  let text = ''
+  strings.forEach((part, idx) => {
+    text += part
+    if (idx < values.length) {
+      text += `$${idx + 1}`
+    }
+  })
   const query = {
-    text: text.replace(/\$0/, ''),
-    values: values,
+    text,
+    values,
   };
   
   // Add better error handling and logging
@@ -69,10 +75,16 @@ const sql = async (strings: TemplateStringsArray, ...values: any[]) => {
 
 // SQL executor for the market database
 const marketSql = async (strings: TemplateStringsArray, ...values: any[]) => {
-  const text = strings.reduce((prev, curr, i) => prev + '$' + i + curr);
+  let text = ''
+  strings.forEach((part, idx) => {
+    text += part
+    if (idx < values.length) {
+      text += `$${idx + 1}`
+    }
+  })
   const query = {
-    text: text.replace(/\$0/, ''),
-    values: values,
+    text,
+    values,
   };
 
   try {
@@ -93,13 +105,14 @@ const marketSql = async (strings: TemplateStringsArray, ...values: any[]) => {
   }
 };
 
-export async function getMarketTables(): Promise<string[]> {
+async function getMarketTables(): Promise<string[]> {
   try {
     const result = await marketSql`
       SELECT table_name
       FROM information_schema.tables
-      WHERE table_schema = 'public'
+      WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
         AND table_type = 'BASE TABLE'
+      ORDER BY table_schema, table_name
     `;
     return result.rows.map((r) => r.table_name as string);
   } catch (error) {
@@ -108,7 +121,7 @@ export async function getMarketTables(): Promise<string[]> {
   }
 }
 
-// Export pool and sql for external use
+// Export pool and SQL helpers for external use
 export { pool, sql, marketPool, marketSql, getMarketTables };
 
 // Update trade schema to match actual database structure
